@@ -13,15 +13,15 @@
 ## config file .podctl.toml
 ```toml
 [pod]
-name = example-app
+name = "example-app"
 # will defualt to default if not set
-namespace = some-namespace
+namespace = "some-namespace"
 
 [env]
 # will default to ~/.config/podctl if not set
-config_dir = /path/to/config/dir
+config_dir = "/path/to/config/dir"
 # will default to $EDITOR if not set
-editor = vim
+editor = "vim"
 
 # logs is not yet implemented
 [logs]
