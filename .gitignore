@@ -1,0 +1,6 @@
+# bins
+podctl
+dist/
+
+# test config
+.podctl.toml

@@ -1,0 +1,10 @@
+[pod]
+name = "admin-app"
+# will defualt to default if not set
+# namespace = "some-namespace"
+
+[env]
+# will default to ~/.config/podctl if not set
+# config_dir = "~/.podctl"
+# will default to $EDITOR if not set
+editor = "vim"
