@@ -1,14 +1,14 @@
 # podctl
 
 ## sub commands
-[.]list `kubectl get pod | grep {{pod.name}}`
+- [.]list `kubectl get pod | grep {{pod.name}}`
     - functional but needs to have the prefix settings implemented
-[ ] init (will prompt the user to enter details about the project | error if the config file exists)
-[ ] logs `kubectl logs -f {{pod.name}}`
-[ ] restart  (i currently am not sure how im gonna do that)
-[ ] configure `$EDITOR {{env.config_dir}}`
-[ ] apply `kubectl apply -f {{env.config_dir}}/{{pod.name}}`
-[ ] info `kubectl describe {{pod.name}}`
+- [ ] init (will prompt the user to enter details about the project | error if the config file exists)
+- [ ] logs `kubectl logs -f {{pod.name}}`
+- [ ] restart  (i currently am not sure how im gonna do that)
+- [ ] configure `$EDITOR {{env.config_dir}}`
+- [ ] apply `kubectl apply -f {{env.config_dir}}/{{pod.name}}`
+- [ ] info `kubectl describe {{pod.name}}`
 
 ## config file .podctl.toml
 ```toml
