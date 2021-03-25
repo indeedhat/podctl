@@ -32,5 +32,6 @@ editor = "vim"
 # - server-pod: will prefix each log with the server and pod suffix from kubectl get pod
 # - server: will prefix each log with just the server suffix from kubectl get pod
 # - pod: will prefix each log with just the pod suffix from kubectl get pod
+# - none: log lines will not be prefixed
 prefix = "index"
 ```

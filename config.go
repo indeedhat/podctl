@@ -20,8 +20,9 @@ const (
 var DefaultEditors = []string{"nvim", "vim", "vi", "nano"}
 
 type Config struct {
-	Pod PodConfig
-	Env EnvConfig
+	Pod  PodConfig
+	Env  EnvConfig
+	Logs LogConfig
 }
 
 type PodConfig struct {
@@ -32,6 +33,10 @@ type PodConfig struct {
 type EnvConfig struct {
 	ConfigDir string `toml:"config_dir"`
 	Editor    string
+}
+
+type LogConfig struct {
+	Prefix LogIndex `default:"index"`
 }
 
 // loadConfig will attempt to unmarshal the config file in the current dir
