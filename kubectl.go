@@ -14,6 +14,7 @@ const (
 
 var (
 	CommandFollowLog = []string{"logs", "-f", "-n"}
+	CommandApply     = []string{"apply", "-f"}
 )
 
 // kubectl will run a kubectl command and return the error/output produced

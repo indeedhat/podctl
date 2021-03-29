@@ -13,9 +13,12 @@ const (
 )
 
 type PodCtl struct {
-	Help bool        `gli:"^help,h" description:"Show this help document"`
-	Logs LogCommand  `gli:"logs" description:"Follow logs from all pods matching the config"`
-	List ListCommand `gli:"list" description:"List all pods matching the config"`
+	Help bool `gli:"^help,h" description:"Show this help document"`
+
+	Configure ConfigureCommand `gli:"configure" description:"Open up the kubernetes config files in your editor"`
+	Apply     ApplyCommand     `gli:"apply" description:"Apply the changes to the pods kubernetes config"`
+	Logs      LogCommand       `gli:"logs" description:"Follow logs from all pods matching the config"`
+	List      ListCommand      `gli:"list" description:"List all pods matching the config"`
 }
 
 // Run is the entry point called by the gli framework if the app is called without a sub command
