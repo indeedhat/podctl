@@ -57,6 +57,8 @@ func (cmd *AttachCommand) attach(info *PodInfo, i int) {
 			cmd.conf.Env.TerminalEmulator,
 			"-e",
 			KubeCtl,
+			"-n",
+			cmd.conf.Pod.Namespace,
 			"attach",
 			"--tty",
 			"--stdin",
