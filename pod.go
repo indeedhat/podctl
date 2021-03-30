@@ -2,6 +2,8 @@ package main
 
 import (
 	"bufio"
+	"fmt"
+	"strconv"
 	"strings"
 )
 
@@ -22,6 +24,34 @@ func (pod *PodInfo) PodID() string {
 		pod.ServerSuffix,
 		pod.PodSuffix,
 	}, "-")
+}
+
+// index will build up the appropriate log prefix for displaying a log line
+func (pod *PodInfo) Index(conf *Config, i int) string {
+	var index string
+
+	switch conf.Logs.Prefix {
+	case LogIndexPodID:
+		index = pod.PodID()
+
+	case LogIndexServerPod:
+		index = pod.ServerSuffix + "-" + pod.PodSuffix
+
+	case LogIndexServer:
+		index = pod.ServerSuffix
+
+	case LogIndexPod:
+		index = pod.PodSuffix
+
+	default:
+		index = strconv.Itoa(i)
+
+	// yeah this is a little odd having default not be last but i wanted this to be a return
+	case LogIndexNone:
+		return ""
+	}
+
+	return fmt.Sprintf("[%s] - ", index)
 }
 
 // getPodIds will extract the podId's that match the pod name in config from the kubectl command

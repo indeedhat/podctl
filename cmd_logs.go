@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"strconv"
 	"sync"
 )
 
@@ -75,7 +74,7 @@ func (cmd *LogCommand) follow(info *PodInfo, i int) {
 			return
 		}
 
-		index := cmd.index(info, i)
+		index := info.Index(cmd.conf, i)
 		for {
 			line, _, err := reader.ReadLine()
 
@@ -89,31 +88,4 @@ func (cmd *LogCommand) follow(info *PodInfo, i int) {
 
 		cmd.wg.Done()
 	}()
-}
-
-// index will build up the appropriate log prefix for displaying a log line
-func (cmd *LogCommand) index(info *PodInfo, i int) string {
-	var index string
-	switch cmd.conf.Logs.Prefix {
-	case LogIndexPodID:
-		index = info.PodID()
-
-	case LogIndexServerPod:
-		index = info.ServerSuffix + "-" + info.PodSuffix
-
-	case LogIndexServer:
-		index = info.ServerSuffix
-
-	case LogIndexPod:
-		index = info.PodSuffix
-
-	default:
-		index = strconv.Itoa(i)
-
-	// yeah this is a little odd having default not be last but i wanted this to be a return
-	case LogIndexNone:
-		return ""
-	}
-
-	return fmt.Sprintf("[%s] - ", index)
 }

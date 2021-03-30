@@ -17,7 +17,18 @@ const (
 	DefaultEditorFallback = "vi"
 )
 
-var DefaultEditors = []string{"nvim", "vim", "vi", "nano"}
+var (
+	DefaultEditors   = []string{"nvim", "vim", "vi", "nano", "gedit"}
+	DefaultTerminals = []string{
+		"alacritty",
+		"xfce4-terminal",
+		"terminator",
+		"xterm",
+		"gnome-terminal",
+		"konsole",
+		"guake",
+	}
+)
 
 type Config struct {
 	Pod  PodConfig
@@ -28,11 +39,13 @@ type Config struct {
 type PodConfig struct {
 	Name      string
 	Namespace string `default:"default"`
+	Shell     string `default:"sh"`
 }
 
 type EnvConfig struct {
-	ConfigDir string `toml:"config_dir"`
-	Editor    string
+	ConfigDir        string `toml:"config_dir"`
+	Editor           string
+	TerminalEmulator string `toml:"terminal_emulator"`
 }
 
 type LogConfig struct {
@@ -90,7 +103,7 @@ func applyConfigDefaults(conf *Config) {
 
 	if conf.Env.Editor == "" {
 		for _, editor := range DefaultEditors {
-			if _, err := exec.LookPath(editor); err != nil {
+			if _, err := exec.LookPath(editor); err == nil {
 				conf.Env.Editor = editor
 				break
 			}
@@ -99,5 +112,13 @@ func applyConfigDefaults(conf *Config) {
 
 	if conf.Env.Editor == "" {
 		conf.Env.Editor = DefaultEditorFallback
+	}
+
+	if conf.Env.TerminalEmulator == "" {
+		for _, terminal := range DefaultTerminals {
+			if _, err := exec.LookPath(terminal); err == nil {
+				conf.Env.TerminalEmulator = terminal
+			}
+		}
 	}
 }

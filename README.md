@@ -24,6 +24,9 @@ shell = "bash"
 config_dir = "/path/to/config/dir"
 # will default to $EDITOR if not set
 editor = "vim"
+# will default to attempting to find a common terminal emulator on your system
+terminal_emulator = "alacritty"
+
 
 # logs is not yet implemented
 [logs]
