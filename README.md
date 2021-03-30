@@ -5,7 +5,7 @@
 - [x] list `kubectl get pod | grep {{pod.name}}`
 - [x] configure `$EDITOR {{env.config_dir}}`
 - [x] apply `kubectl apply -f {{env.config_dir}}/{{pod.name}}`
-- [ ] attach `kubectl exec --tty --stdin {{pod.id}} -- {{pod.shell}}`
+- [x] attach `kubectl exec --tty --stdin {{pod.id}} -- {{pod.shell}}`
 - [ ] restart  (i currently am not sure how im gonna do that)
 - [ ] info `kubectl describe {{pod.name}}`
 - [ ] init (will prompt the user to enter details about the project | error if the config file exists)
