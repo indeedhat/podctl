@@ -37,9 +37,10 @@ type Config struct {
 }
 
 type PodConfig struct {
-	Name      string
-	Namespace string `default:"default"`
-	Shell     string `default:"sh"`
+	Name       string
+	Namespace  string `default:"default"`
+	Shell      string `default:"sh"`
+	RestartCmd string `toml:"restart_cmd"`
 }
 
 type EnvConfig struct {

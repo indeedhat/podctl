@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os/exec"
+	"strings"
 	"sync"
 )
 
@@ -51,6 +52,24 @@ func (cmd *AttachCommand) Run() int {
 
 func (cmd *AttachCommand) attach(info *PodInfo, i int) {
 	cmd.wg.Add(1)
+	fmt.Println(
+		strings.Join(
+			[]string{
+				cmd.conf.Env.TerminalEmulator,
+				"-e",
+				KubeCtl,
+				"-n",
+				cmd.conf.Pod.Namespace,
+				"attach",
+				"--tty",
+				"--stdin",
+				info.PodID(),
+				"--",
+				cmd.conf.Pod.Shell,
+			},
+			" ",
+		),
+	)
 
 	go func() {
 		terminal := exec.Command(
@@ -60,8 +79,7 @@ func (cmd *AttachCommand) attach(info *PodInfo, i int) {
 			"-n",
 			cmd.conf.Pod.Namespace,
 			"attach",
-			"--tty",
-			"--stdin",
+			"-it",
 			info.PodID(),
 			"--",
 			cmd.conf.Pod.Shell,
@@ -80,6 +98,6 @@ func (cmd *AttachCommand) attach(info *PodInfo, i int) {
 			}
 		}
 
-		cmd.wg.Done()
+		// cmd.wg.Done()
 	}()
 }

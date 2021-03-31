@@ -20,6 +20,7 @@ type PodCtl struct {
 	Logs      LogCommand       `gli:"logs" description:"Follow logs from all pods matching the config"`
 	List      ListCommand      `gli:"list" description:"List all pods matching the config"`
 	Attach    AttachCommand    `gli:"attach" description:"Attach an interactive terminal to each matching pod"`
+	Restart   RestartCommand   `gli:"restart" description:"kill/restart all pods that match\nIn its default state it will only crash the pod and let k8s pick it back up again"`
 }
 
 // Run is the entry point called by the gli framework if the app is called without a sub command

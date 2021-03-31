@@ -1,14 +1,20 @@
 # podctl
 
+## ISSUES
+- [ ] the two teminal emulators i have tried (alacritty and xfce4-terminal) handle -c differently
+
 ## sub commands
 - [x] logs `kubectl logs -f {{pod.name}}`
 - [x] list `kubectl get pod | grep {{pod.name}}`
 - [x] configure `$EDITOR {{env.config_dir}}`
 - [x] apply `kubectl apply -f {{env.config_dir}}/{{pod.name}}`
-- [x] attach `kubectl exec --tty --stdin {{pod.id}} -- {{pod.shell}}`
-- [ ] restart  (i currently am not sure how im gonna do that)
+- [x] restart  (i currently am not sure how im gonna do that)
+- [ ] attach `kubectl exec --tty --stdin {{pod.id}} -- {{pod.shell}}`
+    - much of the work is done for this but i am having issues keeping terminals open with the attached shell
 - [ ] info `kubectl describe {{pod.name}}`
+- [ ] exec `kubectl exec {{pod.id}} == {{arg[0]}}`
 - [ ] init (will prompt the user to enter details about the project | error if the config file exists)
+
 
 ## config file .podctl.toml
 ```toml
@@ -18,6 +24,9 @@ name = "example-app"
 namespace = "some-namespace"
 # she shell used by the container (defaults to sh)
 shell = "bash"
+# will default to kill $(top -n 1 | sed -n 5p | awk '{ print $1 }')
+# to kill the main process, not graceful but seems to work
+restart_cmd = ""
 
 [env]
 # will default to ~/.config/podctl if not set
