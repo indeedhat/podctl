@@ -88,7 +88,7 @@ func extractValidPodId(line, podName string) (*PodInfo, bool) {
 	podId := strings.Split(line, " ")[0]
 
 	parts := strings.Split(podId, "-")
-	foundName := strings.Join(parts[:len(parts)-3], "-")
+	foundName := strings.Join(parts[:len(parts)-2], "-")
 
 	if len(parts) <= 3 || foundName != podName {
 		return nil, false
