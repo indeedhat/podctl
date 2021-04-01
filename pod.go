@@ -7,8 +7,6 @@ import (
 	"strings"
 )
 
-const PodSuffixLen = 17
-
 var CommandGetPod = []string{"get", "pod"}
 
 // PodInfo is the basic info about the pod... who knew
@@ -89,13 +87,15 @@ func extractValidPodId(line, podName string) (*PodInfo, bool) {
 
 	podId := strings.Split(line, " ")[0]
 
-	if len(podId) <= PodSuffixLen || podName != podId[:len(podId)-PodSuffixLen] {
+	parts := strings.Split(podId, "-")
+	foundName := strings.Join(parts[:len(parts)-3], "-")
+
+	if len(parts) <= 3 || foundName != podName {
 		return nil, false
 	}
 
-	parts := strings.Split(podId, "-")
 	info := &PodInfo{
-		Name:         podId[:len(podId)-PodSuffixLen],
+		Name:         podName,
 		ServerSuffix: parts[len(parts)-2],
 		PodSuffix:    parts[len(parts)-1],
 	}
