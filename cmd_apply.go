@@ -12,6 +12,7 @@ func (cmd *ApplyCommand) Run() int {
 	cmd.conf, err = loadConfig()
 
 	if err != nil {
+		fmt.Println("failed to load config")
 		panic(err)
 	}
 
@@ -20,8 +21,10 @@ func (cmd *ApplyCommand) Run() int {
 		cmd.conf.Env.ConfigDir,
 	)
 
-	if output, err := kubectl(cmd.conf.Pod.Name, applyCommand); err != nil {
-		fmt.Println(output)
+	output, err := kubectl(cmd.conf.Pod.Namespace, applyCommand)
+	fmt.Println(output)
+
+	if err != nil {
 		panic(err)
 	}
 
