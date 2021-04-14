@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 type ApplyCommand struct {
 	conf *Config
 }
@@ -18,7 +20,8 @@ func (cmd *ApplyCommand) Run() int {
 		cmd.conf.Env.ConfigDir,
 	)
 
-	if _, err = kubectl(cmd.conf.Pod.Name, applyCommand); err != nil {
+	if output, err := kubectl(cmd.conf.Pod.Name, applyCommand); err != nil {
+		fmt.Println(output)
 		panic(err)
 	}
 
