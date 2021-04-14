@@ -3,18 +3,23 @@ package main
 import (
 	"errors"
 	"fmt"
-	"os/exec"
+	"log"
 	"sync"
 )
 
+const (
+	LineSeperator = "-----------------"
+)
+
 type ExecCommand struct {
-	Args []string
+	Args []string `gli:"!"`
 
 	conf *Config
 	pods []*PodInfo
 
 	wg     sync.WaitGroup
 	errors map[string]error
+	stdout map[string]string
 }
 
 func (cmd *ExecCommand) Run() int {
@@ -30,6 +35,9 @@ func (cmd *ExecCommand) Run() int {
 		panic(err)
 	}
 
+	cmd.errors = make(map[string]error)
+	cmd.stdout = make(map[string]string)
+
 	cmd.pods, err = getPodIds(cmd.conf)
 
 	if err != nil {
@@ -44,12 +52,15 @@ func (cmd *ExecCommand) Run() int {
 
 	cmd.wg.Wait()
 
+	for index, err := range cmd.errors {
+		fmt.Sprintf("%s\nError: %s\n%s\n", index, err, LineSeperator)
+	}
+
+	for index, out := range cmd.stdout {
+		fmt.Sprintf("%s\n%s\n%s\n", index, out, LineSeperator)
+	}
+
 	if len(cmd.errors) > 0 {
-		if _, ok := cmd.errors["__skip"]; !ok {
-			for index, err := range cmd.errors {
-				fmt.Println(index, err)
-			}
-		}
 		return ErrPartial
 
 	}
@@ -61,34 +72,26 @@ func (cmd *ExecCommand) exec(info *PodInfo, i int) {
 	cmd.wg.Add(1)
 
 	go func() {
-		terminal := exec.Command(
-			cmd.conf.Env.TerminalEmulator,
+		log.Printf("pod %d", i)
+		out, err := kubectl(
+			cmd.conf.Pod.Namespace,
 			append(
 				[]string{
-					"-e",
-					KubeCtl,
-					"-n",
-					cmd.conf.Pod.Namespace,
-					"exec",
 					info.PodID(),
 					"--",
 				},
 				cmd.Args...,
-			)...,
+			),
 		)
 
-		err := terminal.Run()
-
-		if err != nil {
-			index := info.Index(cmd.conf, i)
-
-			if index == "" {
-				fmt.Println(err)
-				cmd.errors["__skip"] = err
-			} else {
-				cmd.errors[index] = err
-			}
+		log.Println(out, err)
+		index := info.Index(cmd.conf, i)
+		if index == "" {
+			index = fmt.Sprint(i)
 		}
+
+		cmd.errors[index] = err
+		cmd.stdout[index] = out
 
 		cmd.wg.Done()
 	}()

@@ -9,9 +9,8 @@
 - [x] configure `$EDITOR {{env.config_dir}}`
 - [x] apply `kubectl apply -f {{env.config_dir}}/{{pod.name}}`
 - [x] restart  (i currently am not sure how im gonna do that)
-- [x] exec `kubectl exec {{pod.id}} == {{arg[0]}}`
-- [ ] attach `kubectl exec --tty --stdin {{pod.id}} -- {{pod.shell}}`
-    - much of the work is done for this but i am having issues keeping terminals open with the attached shell
+- [x] exec `kubectl exec {{pod.id}} -- {{arg[0]}}`
+- [x] attach `kubectl exec --tty --stdin {{pod.id}} -- {{pod.shell}}`
 - [ ] info `kubectl describe {{pod.name}}`
 - [ ] init (will prompt the user to enter details about the project | error if the config file exists)
 
