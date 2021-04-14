@@ -6,7 +6,6 @@ import (
 	"errors"
 	"log"
 	"os/exec"
-	"strings"
 )
 
 const (
@@ -30,19 +29,15 @@ func kubectl(namespace string, args []string) (string, error) {
 	cmd.Stdout = &stdout
 	cmd.Stderr = &stderr
 
-	log.Println(strings.Join(finalArgs, " "))
 	if err := cmd.Run(); err != nil {
-		log.Println("error returned from cmd")
 		return stdout.String(), err
 	}
 
 	if stderr.Len() != 0 {
-		log.Println("stderr is not empty")
 		return stdout.String(), errors.New(stderr.String())
 	}
 
 	if stdout.Len() == 0 {
-		log.Println("no stdout data")
 		return stdout.String(), errors.New("command did not return any output")
 	}
 

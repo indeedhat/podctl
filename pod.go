@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"strconv"
 	"strings"
 )
@@ -86,11 +87,10 @@ func extractValidPodId(line, podName string) (*PodInfo, bool) {
 	}
 
 	podId := strings.Split(line, " ")[0]
-
 	parts := strings.Split(podId, "-")
 	foundName := strings.Join(parts[:len(parts)-2], "-")
 
-	if len(parts) <= 3 || foundName != podName {
+	if len(parts) < 3 || foundName != podName {
 		return nil, false
 	}
 

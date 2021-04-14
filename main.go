@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/indeedhat/gli"
 )
@@ -38,7 +39,7 @@ func (app *PodCtl) NeedHelp() bool {
 
 func main() {
 	app := gli.NewApplication(&PodCtl{}, "Podctl")
-	app.Debug = true
+	app.Debug = "" != os.Getenv("DEBUG")
 
 	app.Run()
 }
