@@ -1,9 +1,5 @@
 package main
 
-import (
-	"path"
-)
-
 type ApplyCommand struct {
 	conf *Config
 }
@@ -19,7 +15,7 @@ func (cmd *ApplyCommand) Run() int {
 
 	applyCommand := append(
 		CommandApply,
-		path.Join(cmd.conf.Env.ConfigDir, cmd.conf.Pod.Name),
+		cmd.conf.Env.ConfigDir,
 	)
 
 	if _, err = kubectl(cmd.conf.Pod.Name, applyCommand); err != nil {
