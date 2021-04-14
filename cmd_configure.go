@@ -19,10 +19,8 @@ func (cmd *ConfigureCommand) Run() int {
 		panic(err)
 	}
 
-	editor := exec.Command(
-		cmd.conf.Env.Editor,
-		path.Join(cmd.conf.Env.ConfigDir, cmd.conf.Pod.Name),
-	)
+	editor := exec.Command(cmd.conf.Env.Editor)
+	editor.Dir = cmd.conf.Env.ConfigDir
 
 	editor.Stdin = os.Stdin
 	editor.Stdout = os.Stdout
