@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"os/exec"
@@ -93,7 +94,11 @@ func applyConfigDefaults(conf *Config) {
 	userDir, _ := os.UserHomeDir()
 
 	if conf.Env.ConfigDir == "" {
-		conf.Env.ConfigDir = path.Join(userDir, DefaultConfigPath, conf.Pod.Name)
+		conf.Env.ConfigDir = path.Join(
+			userDir,
+			DefaultConfigPath,
+			fmt.Sprintf("%s.%s", conf.Pod.Name, conf.Pod.Namespace),
+		)
 	} else if strings.HasPrefix(conf.Env.ConfigDir, "~") {
 		conf.Env.ConfigDir = userDir + conf.Env.ConfigDir[1:]
 	}
