@@ -18,6 +18,12 @@ func (cmd *ConfigureCommand) Run() int {
 		panic(err)
 	}
 
+	if _, err := os.Stat(cmd.conf.Env.ConfigDir); os.IsNotExist(err) {
+		if err := os.MkdirAll(cmd.conf.Env.ConfigDir, 0755); err != nil {
+			panic(err)
+		}
+	}
+
 	editor := exec.Command(cmd.conf.Env.Editor)
 	editor.Dir = cmd.conf.Env.ConfigDir
 
