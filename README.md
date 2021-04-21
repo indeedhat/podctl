@@ -13,9 +13,9 @@
 - [x] restart  (i currently am not sure how im gonna do that)
 - [x] exec `kubectl exec {{pod.id}} -- {{arg[0]}}`
 - [x] attach `kubectl exec --tty --stdin {{pod.id}} -- {{pod.shell}}`
+- [x] init (will prompt the user to enter details about the project | error if the config file exists)
 - [ ] info `kubectl describe {{pod.name}}`
-- [ ] ingress 
-- [ ] init (will prompt the user to enter details about the project | error if the config file exists)
+- [ ] ingress (list ingress rules for the pod)
 
 
 ## config file .podctl.toml
