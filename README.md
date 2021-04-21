@@ -2,6 +2,8 @@
 
 ## ISSUES
 - [ ] the two teminal emulators i have tried (alacritty and xfce4-terminal) handle -c differently
+- [ ] for some reason i am getting a -h autocomplete option, it might just be an issue on my machine from old rules
+- [ ] i need a better way of handling errors than panic, im just too lazy to think of something nice
 
 ## sub commands
 - [x] logs `kubectl logs -f {{pod.name}}`
@@ -12,6 +14,7 @@
 - [x] exec `kubectl exec {{pod.id}} -- {{arg[0]}}`
 - [x] attach `kubectl exec --tty --stdin {{pod.id}} -- {{pod.shell}}`
 - [ ] info `kubectl describe {{pod.name}}`
+- [ ] ingress 
 - [ ] init (will prompt the user to enter details about the project | error if the config file exists)
 
 

@@ -23,6 +23,7 @@ type PodCtl struct {
 	Configure ConfigureCommand `gli:"configure" description:"Open up the kubernetes config files in your editor"`
 	Exec      ExecCommand      `gli:"exec" description:"execute a comand on all pods that match"`
     Help      HelpCommand      `gli:"help" description:"Show this help message"`
+    Init      InitCommand      `gli:"init" description:"Initialise the podctl environment for this directory"`
     Install   InstallCommand   `gli:"install" description:"install auto complete rules for podctl in your shell"`
 	List      ListCommand      `gli:"list" description:"List all pods matching the config"`
 	Logs      LogCommand       `gli:"logs" description:"Follow logs from all pods matching the config"`

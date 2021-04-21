@@ -16,6 +16,7 @@ func RegisterAutoComplete() *complete.Command {
                 Args: predict.Nothing,
             },
             "help": &complete.Command{},
+            "init": &complete.Command{},
             "list": &complete.Command{},
             "logs": &complete.Command{},
             "restart": &complete.Command{},
