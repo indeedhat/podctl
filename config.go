@@ -97,7 +97,7 @@ func applyConfigDefaults(conf *Config) {
 		conf.Env.ConfigDir = path.Join(
 			userDir,
 			DefaultConfigPath,
-			fmt.Sprintf("%s.%s", conf.Pod.Name, conf.Pod.Namespace),
+			fmt.Sprintf("%s.%s", conf.Pod.Namespace, conf.Pod.Name),
 		)
 	} else if strings.HasPrefix(conf.Env.ConfigDir, "~") {
 		conf.Env.ConfigDir = userDir + conf.Env.ConfigDir[1:]
