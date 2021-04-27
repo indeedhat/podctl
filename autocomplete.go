@@ -11,7 +11,12 @@ func RegisterAutoComplete() *complete.Command {
         Sub: map[string]*complete.Command{
             "apply": &complete.Command{},
             "attach": &complete.Command{},
-            "configure": &complete.Command{},
+            "configure": &complete.Command{
+                Flags: map[string]complete.Predictor{
+                    "print": predict.Nothing,
+                    "p": predict.Nothing,
+                },
+            },
             "exec": &complete.Command{
                 Args: predict.Nothing,
             },

@@ -1,12 +1,15 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"os/exec"
 )
 
 type ConfigureCommand struct {
 	conf *Config
+
+    Print bool `gli:"print,p" description:"Print the config path"`
 }
 
 // Run is the entry point for the configure command called by the gli framework
@@ -23,6 +26,11 @@ func (cmd *ConfigureCommand) Run() int {
 			panic(err)
 		}
 	}
+
+    if cmd.Print {
+        fmt.Print(cmd.conf.Env.ConfigDir)
+        return ErrOk
+    }
 
 	editor := exec.Command(cmd.conf.Env.Editor)
 	editor.Dir = cmd.conf.Env.ConfigDir
