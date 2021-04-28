@@ -9,8 +9,11 @@ import (
 type ConfigureCommand struct {
 	conf *Config
 
+    Help  bool `gli:"help,h" description:"Show this message"`
     Print bool `gli:"print,p" description:"Print the config path"`
+    Apply bool `gli:"apply,a" description:"Auto apply the configuration on editor colse\n    This will blindly apply as soon as the editor process finishes"`
 }
+
 
 // Run is the entry point for the configure command called by the gli framework
 func (cmd *ConfigureCommand) Run() int {
@@ -45,5 +48,15 @@ func (cmd *ConfigureCommand) Run() int {
 		panic(err)
 	}
 
+    if cmd.Apply {
+        if err := applyConfig(cmd.conf); err != nil {
+            panic(err)
+        }
+    }
+
 	return ErrOk
+}
+
+func (cmd *ConfigureCommand) NeedHelp() bool {
+    return cmd.Help
 }

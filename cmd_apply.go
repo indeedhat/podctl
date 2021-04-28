@@ -16,17 +16,22 @@ func (cmd *ApplyCommand) Run() int {
 		panic(err)
 	}
 
-	applyCommand := append(
-		CommandApply,
-		cmd.conf.Env.ConfigDir,
-	)
-
-	output, err := kubectl(cmd.conf.Pod.Namespace, applyCommand)
-	fmt.Println(output)
-
-	if err != nil {
+    if err  = applyConfig(cmd.conf); err != nil {
 		panic(err)
 	}
 
 	return ErrOk
+}
+
+// applyConfig will run kubectl apply -f {config dir}
+func applyConfig(conf *Config) error {
+	applyCommand := append(
+		CommandApply,
+		conf.Env.ConfigDir,
+	)
+
+	output, err := kubectl(conf.Pod.Namespace, applyCommand)
+	fmt.Println(output)
+
+    return err
 }
