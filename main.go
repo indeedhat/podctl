@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/indeedhat/gli"
@@ -34,8 +33,7 @@ type PodCtl struct {
 // Run is the entry point called by the gli framework if the app is called without a sub command
 // so far it does nothing
 func (app *PodCtl) Run() int {
-	fmt.Println("not implemented yet try 'podctl logs'")
-	return ErrBuggered
+    return app.List.Run()
 }
 
 func main() {
